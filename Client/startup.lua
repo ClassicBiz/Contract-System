@@ -619,6 +619,27 @@ end)
                 end    
             end)
 
+-- Peripherals setup
+	if fs.exists("peripherals.json") then
+    		local file = fs.open("peripherals.json", "r")
+    		local peripheralsTable = textutils.unserialize(file.readAll())
+    		file.close()
+    		for _, peripheralData in ipairs(peripheralsTable) do
+        		if peripheralData.label == "inventory" then
+            			emeraldJ = peripheralData.name
+        		elseif peripheralData.label == "cashChest" then
+            			cashJ = peripheralData.name
+        		elseif peripheralData.label == "dispenser" then
+            			dispenserJ = peripheralData.name
+        		end
+    		end
+	end
+
+-- Wrap peripherals using dynamic numbers
+local inventory = tonumber(invJ)
+local cash = tonumber(cashJ)
+local dispenser = tonumber(dispenserJ)	
+
     local none = "N/A"
     completeContractFrame:addLabel():setText("Contract Submission System"):setPosition(12, 2):setForeground(colors.black)
     completeContractFrame:addButton()
@@ -665,9 +686,6 @@ end)
                 local ContractID = tostring(submitContract.payload.id)
                 local status = tostring(submitContract.payload.status)
                 local Payout = submitContract.payload.payout
-                local dispenser = 28
-                local cChest = 50
-                local iChest = 51
                 if status == "accepted" then
                     -- Initialize UI display
                     completeContractFrame:addLabel():setText("Contract ID: ".. ContractID):setPosition(16, 4)
@@ -714,7 +732,7 @@ end)
                             local amountToTake = math.min(currentInDispenser, requiredAmount)
 
                             -- Retrieve items from the dispenser to the chest
-                            local retrieved, retrievalMessage = SharedAPI.ItemAPI.retrieveItemsFromDispenser("minecraft:dispenser_"..dispenser, "minecraft:chest_51", requiredItemID, amountToTake)
+                            local retrieved, retrievalMessage = SharedAPI.ItemAPI.retrieveItemsFromDispenser("minecraft:dispenser_"..dispenser, "minecraft:chest_"..inventory, requiredItemID, amountToTake)
                             if retrieved then
                                 -- Update the block amount in blocksValue (not adding new entry)
                                 blocksValue[i].amount = blocksValue[i].amount - amountToTake
@@ -772,7 +790,7 @@ end)
             
                     if allCompleted == true then
                         -- All items received, proceed with payout
-                        local success, msg = SharedAPI.ItemAPI.payPlayer("minecraft:dispenser_"..dispenser, "minecraft:chest_50", Payout)
+                        local success, msg = SharedAPI.ItemAPI.payPlayer("minecraft:dispenser_"..dispenser, "minecraft:chest_"..cash, Payout)
                         debugField:addLine(tostring(textutils.serialize(msg)))
             
                         if success then
