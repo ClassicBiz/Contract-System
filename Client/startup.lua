@@ -625,7 +625,7 @@ end)
     		local peripheralsTable = textutils.unserialize(file.readAll())
     		file.close()
     		for _, peripheralData in ipairs(peripheralsTable) do
-        		if peripheralData.label == "inventory" then
+        		if peripheralData.label == "Inventory" then
             			invJ = peripheralData.name
         		elseif peripheralData.label == "cashChest" then
             			cashJ = peripheralData.name
