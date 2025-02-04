@@ -1,7 +1,7 @@
 -- Installer Program for Contract Client PC
 local github_files = {
     startup = "https://raw.githubusercontent.com/ClassicBiz/Contract-System/refs/heads/main/Client/startup.lua",
-    api = "https://raw.githubusercontent.com/ClassicBiz/ContractClient/main/API/SharedAPI.lua"
+    api = "https://raw.githubusercontent.com/ClassicBiz/Contract-System/refs/heads/main/Client/API/ContAPI.lua"
 }
 
 local peripheralsTable = {}
