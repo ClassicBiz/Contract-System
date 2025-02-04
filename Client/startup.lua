@@ -626,7 +626,7 @@ end)
     		file.close()
     		for _, peripheralData in ipairs(peripheralsTable) do
         		if peripheralData.label == "inventory" then
-            			emeraldJ = peripheralData.name
+            			invJ = peripheralData.name
         		elseif peripheralData.label == "cashChest" then
             			cashJ = peripheralData.name
         		elseif peripheralData.label == "dispenser" then
